@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "name": "Alice",
+    "quiz_score": 18,
+    "quiz_total": 20,
+    "exam_score": 85,
+    "exam_total": 100,
+    "awards": 2,
+    "course": "Mathematics",
+    "proficiency": "High"
+  },
+  {
+    "id": 2,
+    "name": "Bob",
+    "quiz_score": 15,
+    "quiz_total": 20,
+    "exam_score": 70,
+    "exam_total": 100,
+    "awards": 0,
+    "course": "Science",
+    "proficiency": "Medium"
+  },
+  {
+    "id": 3,
+    "name": "Charlie",
+    "quiz_score": 10,
+    "quiz_total": 20,
+    "exam_score": 50,
+    "exam_total": 100,
+    "awards": 1,
+    "course": "Mathematics",
+    "proficiency": "Low"
+  },
+  {
+    "id": 4,
+    "name": "Diana",
+    "quiz_score": 20,
+    "quiz_total": 20,
+    "exam_score": 95,
+    "exam_total": 100,
+    "awards": 3,
+    "course": "History",
+    "proficiency": "High"
+  },
+  {
+    "id": 5,
+    "name": "Ethan",
+    "quiz_score": 12,
+    "quiz_total": 20,
+    "exam_score": 60,
+    "exam_total": 100,
+    "awards": 0,
+    "course": "Science",
+    "proficiency": "Low"
+  },
+  {
+    "id": 6,
+    "name": "Fiona",
+    "quiz_score": 17,
+    "quiz_total": 20,
+    "exam_score": 78,
+    "exam_total": 100,
+    "awards": 1,
+    "course": "Mathematics",
+    "proficiency": "Medium"
+  },
+  {
+    "id": 7,
+    "name": "George",
+    "quiz_score": 16,
+    "quiz_total": 20,
+    "exam_score": 82,
+    "exam_total": 100,
+    "awards": 2,
+    "course": "Engineering",
+    "proficiency": "High"
+  },
+  {
+    "id": 8,
+    "name": "Hannah",
+    "quiz_score": 14,
+    "quiz_total": 20,
+    "exam_score": 68,
+    "exam_total": 100,
+    "awards": 0,
+    "course": "History",
+    "proficiency": "Medium"
+  },
+  {
+    "id": 9,
+    "name": "Ian",
+    "quiz_score": 19,
+    "quiz_total": 20,
+    "exam_score": 90,
+    "exam_total": 100,
+    "awards": 4,
+    "course": "Engineering",
+    "proficiency": "High"
+  },
+  {
+    "id": 10,
+    "name": "Julia",
+    "quiz_score": 13,
+    "quiz_total": 20,
+    "exam_score": 55,
+    "exam_total": 100,
+    "awards": 1,
+    "course": "Science",
+    "proficiency": "Low"
+  }
+]
