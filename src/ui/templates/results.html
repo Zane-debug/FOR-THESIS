@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - Video AI Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            color: #555;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #ddd;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #ccc;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .copy-btn {
+            background: #28a745;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-results h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toc {
+            background: #f0f4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .toc h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Analysis Results</h1>
+            <p>Your video has been successfully analyzed!</p>
+        </div>
+
+        <div class="content">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <h2>Loading results...</h2>
+                <p>Please wait while we prepare your analysis.</p>
+            </div>
+
+            <div id="no-results" class="no-results" style="display: none;">
+                <h2>No Results Found</h2>
+                <p>It looks like there are no analysis results available.</p>
+                <a href="/" class="btn">← Back to Upload</a>
+            </div>
+
+            <div id="results-content" style="display: none;">
+                <div class="toc">
+                    <h3>📋 Table of Contents</h3>
+                    <ul>
+                        <li><a href="#transcript">📝 Transcript</a></li>
+                        <li><a href="#summary">📊 Summary</a></li>
+                        <li><a href="#study-guide">📚 Study Guide</a></li>
+                        <li><a href="#topics">🎯 Recommended Topics</a></li>
+                        <li><a href="#quizzes">❓ Quizzes</a></li>
+                    </ul>
+                </div>
+
+                <div id="transcript" class="section">
+                    <div class="section-title">
+                        📝 Transcript
+                        <button class="btn copy-btn" onclick="copyToClipboard('transcript-content')">📋 Copy</button>
+                    </div>
+                    <div id="transcript-content" class="section-content"></div>
+                </div>
+
+                <div id="summary" class="section">
+                    <div class="section-title">
+                        📊 Summary
+                        <button class="btn copy-btn" onclick="copyToClipboard('summary-content')">📋 Copy</button>
+                    </div>
+                    <div id="summary-content" class="section-content"></div>
+                </div>
+
+                <div id="study-guide" class="section">
+                    <div class="section-title">
+                        📚 Study Guide
+                        <button class="btn copy-btn" onclick="copyToClipboard('study-guide-content')">📋 Copy</button>
+                    </div>
+                    <div id="study-guide-content" class="section-content"></div>
+                </div>
+
+                <div id="topics" class="section">
+                    <div class="section-title">
+                        🎯 Recommended Topics
+                        <button class="btn copy-btn" onclick="copyToClipboard('topics-content')">📋 Copy</button>
+                    </div>
+                    <div id="topics-content" class="section-content"></div>
+                </div>
+
+                <div id="quizzes" class="section">
+                    <div class="section-title">
+                        ❓ Quizzes
+                        <button class="btn copy-btn" onclick="copyToClipboard('quizzes-content')">📋 Copy</button>
+                    </div>
+                    <div id="quizzes-content" class="section-content"></div>
+                </div>
+
+                <div class="actions">
+                    <a href="/" class="btn">🔄 Analyze Another Video</a>
+                    <button class="btn btn-secondary" onclick="downloadResults()">💾 Download Results</button>
+                    <button class="btn btn-secondary" onclick="printResults()">🖨️ Print Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function parseResults(resultText) {
+            const sections = {
+                transcript: '',
+                summary: '',
+                studyGuide: '',
+                topics: '',
+                quizzes: ''
+            };
+
+            // Split the result text into sections
+            const lines = resultText.split('\n');
+            let currentSection = '';
+            let content = [];
+
+            for (let line of lines) {
+                line = line.trim();
+                
+                if (line.includes('TRANSCRIPT:')) {
+                    if (currentSection && content.length > 0) {
+                        sections[currentSection] = content.join('\n').trim();
+                    }
+                    currentSection = 'transcript';
+                    content = [];
+                } else if (line.includes('SUMMARY:')) {
+                    if (currentSection && content.length > 0) {
+                        sections[currentSection] = content.join('\n').trim();
+                    }
+                    currentSection = 'summary';
+                    content = [];
+                } else if (line.includes('STUDY GUIDE:')) {
+                    if (currentSection && content.length > 0) {
+                        sections[currentSection] = content.join('\n').trim();
+                    }
+                    currentSection = 'studyGuide';
+                    content = [];
+                } else if (line.includes('RECOMMENDED TOPICS:')) {
+                    if (currentSection && content.length > 0) {
+                        sections[currentSection] = content.join('\n').trim();
+                    }
+                    currentSection = 'topics';
+                    content = [];
+                } else if (line.includes('QUIZZES:')) {
+                    if (currentSection && content.length > 0) {
+                        sections[currentSection] = content.join('\n').trim();
+                    }
+                    currentSection = 'quizzes';
+                    content = [];
+                } else if (currentSection && line && !line.includes('===') && !line.includes('🎯') && !line.includes('Analysis completed')) {
+                    content.push(line);
+                }
+            }
+
+            // Add the last section
+            if (currentSection && content.length > 0) {
+                sections[currentSection] = content.join('\n').trim();
+            }
+
+            return sections;
+        }
+
+        function displayResults() {
+            const resultText = sessionStorage.getItem('analysisResult');
+            
+            if (!resultText) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('no-results').style.display = 'block';
+                return;
+            }
+
+            const sections = parseResults(resultText);
+
+            // Display each section
+            document.getElementById('transcript-content').textContent = sections.transcript || 'No transcript available.';
+            document.getElementById('summary-content').textContent = sections.summary || 'No summary available.';
+            document.getElementById('study-guide-content').textContent = sections.studyGuide || 'No study guide available.';
+            document.getElementById('topics-content').textContent = sections.topics || 'No topics available.';
+            document.getElementById('quizzes-content').textContent = sections.quizzes || 'No quizzes available.';
+
+            // Show results
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results-content').style.display = 'block';
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show temporary success message
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#28a745';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        function downloadResults() {
+            const resultText = sessionStorage.getItem('analysisResult');
+            if (!resultText) return;
+
+            const blob = new Blob([resultText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'video-analysis-results.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function printResults() {
+            window.print();
+        }
+
+        // Load results when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(displayResults, 1000); // Small delay for better UX
+        });
+    </script>
+</body>
+</html>

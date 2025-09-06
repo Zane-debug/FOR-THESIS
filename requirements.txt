@@ -1,0 +1,12 @@
+moviepy
+whisper
+fastapi
+uvicorn[standard]
+jinja2
+python-multipart
+requests
+numpy
+pandas
+pytest
+yt-dlp
+validators
